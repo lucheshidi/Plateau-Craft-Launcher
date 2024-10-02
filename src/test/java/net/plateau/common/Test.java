@@ -1,68 +1,36 @@
 package net.plateau.common;
 
-import org.apache.commons.cli.*;
-import org.apache.log4j.Logger;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
-public class Test
-{
+public class Test {
+    public static void main(String[] args) {
+        String filePath = "plateau.json";
+        String directoryInfo = readDirectoryInfo(filePath, 10, 11);
+        System.out.println("Directory Info: " + directoryInfo);
+    }
 
-    private static final Logger logger = Logger.getLogger(Main.class);
+    private static String readDirectoryInfo(String filePath, int lineNumber, int charPosition) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String currentLine;
+            int currentLineNumber = 0;
 
-    public static void main(String[] args)
-    {
-        Options options = defineOptions();
-        CommandLineParser parser = new DefaultParser();
+            while ((currentLine = reader.readLine()) != null) {
+                currentLineNumber++;
+                if (currentLineNumber == lineNumber) {
+                    if (charPosition <= currentLine.length()) {
+                        return currentLine.substring(charPosition - 1);
+                    } else {
+                        return "Error: The character position exceeds the line length.";
+                    }
+                }
+            }
 
-        try
-        {
-            CommandLine cmd = parser.parse(options, args);
-
-            if (cmd.hasOption("version")) showVersion();
-            if (cmd.hasOption("launch")) handleLaunch(cmd);
-            if (cmd.hasOption("download")) handleDownload(cmd);
-            if (cmd.hasOption("list")) handleList();
-            if (cmd.hasOption("help") || cmd.getOptions().length == 0) printHelp(options);
-
-        } catch (ParseException e)
-        {
-            logger.error("Failed to parse command line options", e);
-            printHelp(options);
+            return "Error: The file does not have the specified line number.";
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Error: Unable to read file.";
         }
-    }
-
-    private static Options defineOptions()
-    {
-        return new Options()
-                .addOption(new Option("?", "help", false, "help"))
-                .addOption(new Option("v", "version", false, "launcher version"))
-                .addOption(new Option("l", "launch", true, "launch game"))
-                .addOption(new Option("d", "download", true, "download game"))
-                .addOption(new Option("list", "list", false, "list versions"));
-    }
-
-    private static void showVersion()
-    {
-        System.out.println("net.plateau.MainCom version:0.1.0");
-        System.out.println("Project: https://github.com/lucheshidi/plateau");
-    }
-
-    private static void handleLaunch(CommandLine cmd)
-    {
-        System.out.println("Launching version: " + cmd.getOptionValue("launch"));
-    }
-
-    private static void handleDownload(CommandLine cmd)
-    {
-        System.out.println("Downloading version: " + cmd.getOptionValue("download"));
-    }
-
-    private static void handleList()
-    {
-        System.out.println("Listing versions...");
-    }
-
-    private static void printHelp(Options options)
-    {
-        new HelpFormatter().printHelp("net.plateau.MainCom", options);
     }
 }
