@@ -2,10 +2,12 @@ package net.plateau.common;
 
 import org.apache.commons.cli.*;
 import org.apache.log4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 class writeFileInfo extends Thread
 {
@@ -22,44 +24,53 @@ public class Main
 
     public static void main(String[] args)
     {
-        //命名线程
+        // 命名线程
         Runnable writeFileInfo = new writeFileInfo();
         new Thread(writeFileInfo, "write json").start();
 
-        //创建配置文件
-        String ProgramPath = System.getProperty("user.dir");
-        logger.info("Program Path: " + ProgramPath);
+        // 创建配置文件
+        String programPath = System.getProperty("user.dir");
+        String infPath = Paths.get(programPath, "plateau").toString();
+        File targetDirectory = new File(infPath);
+        if (!targetDirectory.exists()) {
+            boolean success = targetDirectory.mkdir();
+            if (success) {
+                logger.info("InfPath is created successfully");
+            } else {
+                logger.error("Failed to create InfPath");
+                return;
+            }
+        }
+        logger.info("Program Path: " + programPath);
 
-        //读取配置文件
-        File file = new File(ProgramPath, "plateau.json");
+        // 读取配置文件
+        File file = new File(infPath, "info.json");
         if (!file.exists()) {
             try {
                 boolean fr = file.createNewFile();
                 if (fr) {
-                    String d = "0";
+                    logger.info("info.json file is created successfully.");
                 } else {
-                    String c = "0";
+                    logger.error("Failed to create info.json file.");
+                    return;
                 }
             } catch (IOException e) {
-                String b = "0";
-                e.printStackTrace();
+                logger.error("Error creating info.json file", e);
+                return;
             }
-        } else {
-            String a = "0";
         }
 
-        //获取程序绝对路径
+        // 获取程序绝对路径
         String filePath = file.getAbsolutePath();
         String directoryInfo = readDirectoryInfo(filePath, 1, 1);
         logger.info("Directory Info: " + directoryInfo);
 
-        //定义Options对象
+        // 定义Options对象
         Options options = defineOptions();
         CommandLineParser parser = new DefaultParser();
 
-        //新建选项
-        try
-        {
+        // 新建选项
+        try {
             CommandLine cmd = parser.parse(options, args);
 
             if (cmd.hasOption("help") || cmd.getOptions().length == 0) printHelp(options);
@@ -69,14 +80,13 @@ public class Main
             if (cmd.hasOption("list")) handleList();
             if (cmd.hasOption("changeDir")) handleChangeDir();
 
-        } catch (ParseException e)
-        {
+        } catch (ParseException e) {
             logger.error("Failed to run command line options", e);
             printHelp(options);
         }
     }
 
-    //添加选项
+    // 添加选项
     private static Options defineOptions()
     {
         return new Options()
@@ -87,13 +97,13 @@ public class Main
                 .addOption(new Option("list", "list", false, "list versions"));
     }
 
-    //设置选项Help
+    // 设置选项Help
     private static void printHelp(Options options)
     {
         new HelpFormatter().printHelp("net.plateau.MainCom", options);
     }
 
-    //设置选项ver
+    // 设置选项ver
     private static void showVersion()
     {
         System.out.println("net.plateau.MainCom version:0.1.0");
