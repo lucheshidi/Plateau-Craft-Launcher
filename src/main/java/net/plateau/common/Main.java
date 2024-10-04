@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Paths;
+import net.plateau.common.util.initLogRecord;
+import org.testng.annotations.Test;
 
 class writeFileInfo extends Thread
 {
@@ -18,12 +20,30 @@ class writeFileInfo extends Thread
     }
 }
 
-public class Main
-{
+public class Main {
+
     private static final Logger logger = Logger.getLogger(Main.class);
 
-    public static void main(String[] args)
-    {
+    public static boolean deleteFile(String fileName) {
+        File file = new File(fileName);
+        // 如果文件路径所对应的文件存在，并且是一个文件，则直接删除
+        if (file.exists() && file.isFile()) {
+            if (file.delete()) {
+                System.out.println("删除单个文件" + fileName + "成功！");
+                return true;
+            } else {
+                System.out.println("删除单个文件" + fileName + "失败！");
+                return false;
+            }
+        } else {
+            System.out.println("delete one file fail:" + fileName + "file does no exist!");
+            return false;
+        }
+    }
+
+    public static void main(String[] args) {
+        logger.warn("Starting net.plateau.MainCom...");
+        initLogRecord.initLog();
         // 命名线程
         Runnable writeFileInfo = new writeFileInfo();
         new Thread(writeFileInfo, "write json").start();
@@ -33,15 +53,11 @@ public class Main
         String infPath = Paths.get(programPath, "plateau").toString();
         File targetDirectory = new File(infPath);
         if (!targetDirectory.exists()) {
-            boolean success = targetDirectory.mkdir();
-            if (success) {
-                logger.info("InfPath is created successfully");
-            } else {
-                logger.error("Failed to create InfPath");
-                return;
-            }
+            logger.info("Program Path: " + programPath);
+        } else {
+            return;
         }
-        logger.info("Program Path: " + programPath);
+        File launchScript = new File(infPath + "/latest-launch.bat");
 
         // 读取配置文件
         File file = new File(infPath, "info.json");
@@ -58,6 +74,7 @@ public class Main
                 logger.error("Error creating info.json file", e);
                 return;
             }
+            logger.warn("Plateau is exit");
         }
 
         // 获取程序绝对路径
@@ -86,48 +103,57 @@ public class Main
         }
     }
 
+    //删除旧的日志
+    String programPath = System.getProperty("user.dir");
+    String infPath = Paths.get(programPath, "plateau").toString();
+
+    void testDeleteFileDir1() {
+        File file = new File(programPath + "plateau/logs/latest.log");
+        boolean deleted = file.delete();
+        if (!deleted) {
+            logger.info("The last profile has been deleted failed");
+        } else {
+            logger.info("The last profile has been deleted successful");
+        }
+    }
+
     // 添加选项
-    private static Options defineOptions()
-    {
+    private static Options defineOptions() {
         return new Options()
                 .addOption(new Option("?", "help", false, "help"))
                 .addOption(new Option("v", "version", false, "launcher version"))
                 .addOption(new Option("l", "launch", true, "launch game"))
                 .addOption(new Option("d", "download", true, "download game"))
-                .addOption(new Option("list", "list", false, "list versions"));
+                .addOption(new Option("li", "list", false, "list versions"))
+                .addOption(new Option("cd", "chand", true, "change directory"));
     }
 
     // 设置选项Help
-    private static void printHelp(Options options)
-    {
+    private static void printHelp(Options options) {
         new HelpFormatter().printHelp("net.plateau.MainCom", options);
     }
 
     // 设置选项ver
-    private static void showVersion()
-    {
-        System.out.println("net.plateau.MainCom version:0.1.0");
-        System.out.println("Project: https://github.com/lucheshidi/plateau");
+    private static void showVersion() {
+        System.out.println("\nnet.plateau.MainCom version: v0.1.0-Alpha");
+        System.out.println("Project: https://github.com/lucheshidi/Plateau-Craft-Launcher-Command\n");
     }
 
-    private static void handleLaunch(CommandLine cmd)
-    {
-        System.out.println("Launching version: " + cmd.getOptionValue("launch"));
+    private static void handleLaunch(CommandLine cmd) {
+        System.out.println("Launching version: " + cmd.getOptionValue("launch") + "...");
     }
 
-    private static void handleDownload(CommandLine cmd)
-    {
-        System.out.println("Downloading version: " + cmd.getOptionValue("download"));
+    private static void handleDownload(CommandLine cmd) {
+        System.out.println("Downloading version: " + cmd.getOptionValue("download") + "...");
     }
 
-    private static void handleList()
-    {
+    private static void handleList() {
         System.out.println("Reading versions list...");
         //
     }
 
-    private static void handleChangeDir()
-    {
+    private static void handleChangeDir() {
+        System.out.println("Changing directory to\" + changedDir + \" ...");
         //
     }
 
