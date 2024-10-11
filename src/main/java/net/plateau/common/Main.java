@@ -6,7 +6,7 @@ import java.util.Scanner;
 /**
  * @author shidi
  *
- * @see "github.com/lucheshidi/Plateau-Craft-Launcher-Command"
+ * @see net.plateau.common.rights.copyrightsPlateau
  *
  * @apiNote
  * This is the Plateau Launcher Command version.
@@ -14,6 +14,8 @@ import java.util.Scanner;
  * <p>
  * (c)Copyright Plateau
  * 2024.10.11
+ *
+ * @version 0.1.5
  */
 
 //创建写入配置文件类(继承Thread)
