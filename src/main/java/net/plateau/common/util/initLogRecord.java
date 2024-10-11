@@ -22,7 +22,7 @@ public class initLogRecord {
         // 清空现有的Appender并添加新的
         logger.removeAllAppenders();
         logger.addAppender(consoleAppender);
-        logger.setLevel(Level.INFO);
+        logger.setLevel(Level.ALL);
 
         // 记录初始化日志
         logger.info("Log initialization begins");
