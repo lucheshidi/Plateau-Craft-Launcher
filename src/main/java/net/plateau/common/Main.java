@@ -6,7 +6,6 @@ import java.util.Scanner;
 /**
  * @author shidi
  *
- * @see net.plateau.common.rights.copyrightsPlateau
  *
  * @apiNote
  * This is the Plateau Launcher Command version.
@@ -25,30 +24,28 @@ class writeFileInfo extends Thread
     public void run()
     {
         String programPath = System.getProperty("user.dir");
-        File file = new File(programPath + "");
+        File file = new File(programPath + "/plateau/info.json");
         System.out.println(programPath);
-        if (!file.exists()) {
-            file.mkdir();
-        }
+        file.mkdir();
     }
 }
 
 public class Main
 {
-    public static void main()
+    public static void main(String[] args)
     {
-        String projectPath = System.getProperty("user.dir");
+        String programPath = System.getProperty("user.dir");
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Welcome to Plateau Launcher");
-        System.out.println("copyright(c) net.plateau");
+        System.out.println("(c)Copyright net.plateau");
         String consolefolder = "C:\\";
         String runMCCommand = "";
         String minecraftFolder;
 
         while (true)
         {
-            System.out.print("PTCL " + consolefolder + ":#>>");
+            System.out.print("<PTCL> [" + consolefolder + "]:>># ");
             String input = scanner.nextLine();
 
             if ("".equalsIgnoreCase(input))
@@ -63,18 +60,55 @@ public class Main
                 System.exit(0);
                 break;
             }
-            else if ("run".equalsIgnoreCase(input))
-            {
-                System.out.println("Please input launch version:");
-                String ver = scanner.nextLine();
-                System.out.println("\"run\" is testing!");
-            }
             else if ("cd".equalsIgnoreCase(input))
             {
-                System.out.println("Please choose \".minecraft\" folder directory:");
+                System.out.print("Please input \".minecraft\" folder directory:");
                 minecraftFolder = scanner.nextLine();
+                if (minecraftFolder == "")
+                {
+                    System.out.println("ERROR:unknown directory \"\"");
+                    return;
+                }
                 consolefolder = minecraftFolder;
                 System.out.println("Set \".minecraft\" folder success!");
+            }
+            else if ("cd ".equalsIgnoreCase(input))
+            {
+                System.out.print("Please input \".minecraft\" folder directory:");
+                minecraftFolder = scanner.nextLine();
+                if (minecraftFolder == "")
+                {
+                    System.out.println("ERROR:unknown directory \"\"");
+                    return;
+                }
+                consolefolder = minecraftFolder;
+                System.out.println("Set \".minecraft\" folder success!");
+            }
+            else if ("run".equalsIgnoreCase(input))
+            {
+                System.out.print("Please input launch version: ");
+                String ver = scanner.nextLine();
+                System.out.print("Is this version have Mod Loader?[Y/n]: ");
+                String modLoader = scanner.nextLine();
+                switch (modLoader) {
+                    case "Y", "y" -> System.out.println("\"modLoader\" is testing!");
+                    case "N", "n" -> System.out.println("\"modLoader\" is testing!");
+                    case null, default -> System.out.println("ERROR:unknown option:" + modLoader);
+                }
+                System.out.println("\"run\" is testing!");
+            }
+            else if ("run ".equalsIgnoreCase(input))
+            {
+                System.out.print("Please input launch version: ");
+                String ver = scanner.nextLine();
+                System.out.print("Is this version have Mod Loader?[Y/n]: ");
+                String modLoader = scanner.nextLine();
+                switch (modLoader) {
+                    case "Y", "y" -> System.out.println("\"modLoader\" is testing!");
+                    case "N", "n" -> System.out.print("\"modLoader\" is testing!");
+                    case null, default -> System.out.print("ERROR:unknown option:" + modLoader);
+                }
+                System.out.println("\"run\" is testing!");
             }
             else
             {
