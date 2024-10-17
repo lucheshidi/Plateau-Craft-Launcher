@@ -28,8 +28,6 @@ public class Main
 
         System.out.println("Welcome to Plateau Launcher");
         System.out.println("(c)Copyright net.plateau");
-        String consolefolder = "C:\\";
-        String runMCCommand = "";
 
         createCommands.Create();
     }
