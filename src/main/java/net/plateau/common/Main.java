@@ -1,8 +1,7 @@
 package net.plateau.common;
 
-import java.io.File;
+import net.plateau.common.util.writeFileInfo;
 import java.util.Scanner;
-
 /**
  * @author shidi
  *
@@ -17,21 +16,9 @@ import java.util.Scanner;
  * @version 0.1.5
  */
 
-//创建写入配置文件类(继承Thread)
-class writeFileInfo extends Thread
-{
-    @Override
-    public void run()
-    {
-        String programPath = System.getProperty("user.dir");
-        File file = new File(programPath + "/plateau/info.json");
-        System.out.println(programPath);
-        file.mkdir();
-    }
-}
-
 public class Main
 {
+
     public static void main(String[] args)
     {
         String programPath = System.getProperty("user.dir");
@@ -62,7 +49,7 @@ public class Main
             }
             else if ("cd".equalsIgnoreCase(input))
             {
-                System.out.print("Please input \".minecraft\" folder directory:");
+                System.out.print("Please input \".minecraft\" folder directory: ");
                 minecraftFolder = scanner.nextLine();
                 if (minecraftFolder == "")
                 {
@@ -74,7 +61,7 @@ public class Main
             }
             else if ("cd ".equalsIgnoreCase(input))
             {
-                System.out.print("Please input \".minecraft\" folder directory:");
+                System.out.print("Please input \".minecraft\" folder directory: ");
                 minecraftFolder = scanner.nextLine();
                 if (minecraftFolder == "")
                 {
@@ -93,7 +80,7 @@ public class Main
                 switch (modLoader) {
                     case "Y", "y" -> System.out.println("\"modLoader\" is testing!");
                     case "N", "n" -> System.out.println("\"modLoader\" is testing!");
-                    case null, default -> System.out.println("ERROR:unknown option:" + modLoader);
+                    case null, default -> System.out.println("ERROR:Unknown Option:" + modLoader);
                 }
                 System.out.println("\"run\" is testing!");
             }
@@ -106,14 +93,14 @@ public class Main
                 switch (modLoader) {
                     case "Y", "y" -> System.out.println("\"modLoader\" is testing!");
                     case "N", "n" -> System.out.print("\"modLoader\" is testing!");
-                    case null, default -> System.out.print("ERROR:unknown option:" + modLoader);
+                    case null, default -> System.out.print("ERROR:Unknown Option:" + modLoader);
                 }
                 System.out.println("\"run\" is testing!");
             }
             else
             {
                 // 处理用户输入的命令，你可以根据不同的命令执行相应的操作
-                System.out.println("error:unknown command:" + input);
+                System.out.println("ERROR:Unknown Command:" + input);
             }
         }
     }
