@@ -59,4 +59,12 @@ public class runMCCommands {
         }
         return builder.toString();
     }
+
+    public static void run(String[] args) {
+        // 示例命令
+        String command1 = "";
+        // 在Windows上使用GBK编码读取输出，在Linux上使用系统默认编码
+        String result1 = runMCCommands.executeCommand(command1);
+        System.out.println(result1);
+    }
 }
