@@ -9,7 +9,6 @@ public class writeFileInfo extends Thread
     {
         String programPath = System.getProperty("user.dir");
         File file = new File(programPath + "/plateau/info.json");
-        System.out.println(programPath);
-        file.mkdir();
+        boolean success = file.mkdir();
     }
 }

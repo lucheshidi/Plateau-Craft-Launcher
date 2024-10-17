@@ -1,4 +1,4 @@
-package net.plateau.common;
+package net.plateau.common.util.commands;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Test {
+public class runMCCommands {
 
     public static String executeCommand(String command) {
         Charset charset = System.getProperty("os.name").toLowerCase().contains("win") ? Charset.forName("GBK") : Charset.defaultCharset();
@@ -58,13 +58,5 @@ public class Test {
             builder.append(System.getProperty("line.separator"));
         }
         return builder.toString();
-    }
-
-    public static void main(String[] args) {
-        // 示例命令
-        String command = "ping www.a.shifen.com";
-        // 在Windows上使用GBK编码读取输出，在Linux上使用系统默认编码
-        String result = Test.executeCommand(command);
-        System.out.println(result);
     }
 }
