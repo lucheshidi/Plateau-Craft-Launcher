@@ -11,7 +11,7 @@ import net.plateau.common.util.commands.runMCCommands;
  * @apiNote
  * This is the Plateau Launcher Command version.
  * The GUI version is stop exploitation.
- * <p>
+ *
  * (c)Copyright Plateau
  * 2024.10.11
  *
