@@ -1,0 +1,13 @@
+{
+    "dirs": {
+        "gameDir": "NULL",
+        "JavaDir": ""
+    },
+    "isOpenVersionIsolation": "false",
+    "isEggHuntFound" :"false",
+    "javaMemory": {
+        "DEFAULT": "4g",
+        "Xmx": "DEFAULT",
+        "Xms": "DEFAULT"
+    }
+}

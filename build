@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#!/bin/sh bash
+
+# This is a script to build the launcher Linux version
+# This project is only on github. If you see this project in other website.
+# You need to in plateau's issue(arbitrarily issue) to update a issue
+# and we will look it
+
+echo Test maven ...
+FILE=./mvnw
+if [ -f "$FILE" ]; then
+    echo TEST SUCCESS
+    ./mvnw clean package
+else
+    echo ERROR:can\'t find \"mvnw\" file!
+    exit
+fi
+
+echo YES! you can go to ./target/ folder to play!
