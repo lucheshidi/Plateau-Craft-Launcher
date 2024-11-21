@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import net.plateau.common.util.commands.launchMcCommand;
 import net.plateau.common.util.help.Help;
 import net.plateau.common.util.help.githubDir;
-import net.plateau.common.util.writeInfo.changeConfigFileInfo;
+import net.plateau.common.util.writeInfo.SetConfigFileValue;
 
 public class createOptions {
     public static void Create() {
@@ -129,7 +129,7 @@ public class createOptions {
             else if("config".equalsIgnoreCase(input)) {
                 System.out.println("Please input config name: ");
                 String conf = scanner.nextLine();
-                changeConfigFileInfo.change("");
+                SetConfigFileValue.change("", "");
             }
             else {
                 // 处理用户输入的命令，你可以根据不同的命令执行相应的操作
