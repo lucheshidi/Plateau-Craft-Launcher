@@ -14,6 +14,7 @@ public class githubDir
     public static void print()
     {
         System.out.println("""
+                    
                     net.plateau.common.util.help.githubDir:
                         https://github.com/lucheshidi/Plateau-Craft-Launcher
                         Copyright(c) Plateau

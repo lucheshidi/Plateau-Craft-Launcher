@@ -18,12 +18,13 @@ import java.io.IOException;
  * The GUI version is stop exploitation.
  * @see net.plateau.common.util.help.rights
  * @see <a href=https://github.com/lucheshidi/Plateau-Craft-Launcher></a>
+ * @see <a href=https://lucheshidi.github.io></a>
  *
  * @version 0.1.5
  */
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         String programPath = System.getProperty("user.dir");
 
         System.out.println("Welcome to Plateau Launcher");

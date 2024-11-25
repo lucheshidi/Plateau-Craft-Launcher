@@ -1,5 +1,8 @@
 package net.plateau.common.util.readInfo.json;
 
+import java.io.FileReader;
+import java.io.IOException;
+
 public class Config {
     private Dirs dirs;
     private String isEggHuntFound;

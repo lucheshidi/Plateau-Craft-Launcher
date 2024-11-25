@@ -1,37 +1,64 @@
 package net.plateau.common.gson;
 
-import com.google.gson.Gson;
+import org.jline.reader.*;
+import org.jline.reader.impl.DefaultParser;
+import org.jline.terminal.Terminal;
+import org.jline.terminal.TerminalBuilder;
 
-import net.plateau.common.gson.jsons.Config;
-import net.plateau.common.gson.jsons.Dirs;
-import net.plateau.common.gson.jsons.JavaMemory;
+import java.io.IOException;
 
 public class Test {
-    public static void main(String[] args) {
-        String json = "{\n" +
-                "    \"dirs\": {\n" +
-                "        \"gameDir\": \"\",\n" +
-                "        \"isOpenVersionIsolation\": \"false\",\n" +
-                "        \"JavaDir\": \"\"\n" +
-                "    },\n" +
-                "    \"isEggHuntFound\" :\"false\",\n" +
-                "    \"javaMemory\": {\n" +
-                "        \"DEFAULT\": \"4g\",\n" +
-                "        \"Xmx\": \"DEFAULT\",\n" +
-                "        \"Xms\": \"DEFAULT\"\n" +
-                "    }\n" +
-                "}";
+    public static void main(String[] args) throws IOException {
+        Terminal terminal = TerminalBuilder.builder().system(true).build();
+        LineReader reader = LineReaderBuilder.builder()
+                .terminal(terminal)
+                .parser(new DefaultParser())
+                .build();
 
-        Gson gson = new Gson();
-        Config config = gson.fromJson(json, Config.class);
+        System.out.println("Welcome to the enhanced CLI. Type 'exit' to quit.");
 
-        // 访问解析后的数据
-        System.out.println("Game Directory: " + config.getDirs().getGameDir());
-        System.out.println("Is Version Isolation Open: " + config.getDirs().getIsOpenVersionIsolation());
-        System.out.println("Java Directory: " + config.getDirs().getJavaDir());
-        System.out.println("Is Egg Hunt Found: " + config.getIsEggHuntFound());
-        System.out.println("Java Memory Default: " + config.getJavaMemory().getDEFAULT());
-        System.out.println("Java Memory Xmx: " + config.getJavaMemory().getXmx());
-        System.out.println("Java Memory Xms: " + config.getJavaMemory().getXms());
+        while (true) {
+            try {
+                String line = reader.readLine("\nENHANCED CLI> ");
+                if ("exit".equalsIgnoreCase(line)) {
+                    System.out.println("Goodbye!");
+                    break;
+                }
+
+                // 解析并处理命令
+                processCommand(line.trim());
+            } catch (UserInterruptException e) {
+                System.out.println("Interrupted!");
+                break;
+            } catch (EndOfFileException e) {
+                break;
+            }
+        }
+    }
+
+    private static void processCommand(String input) {
+        if (input.isEmpty()) return;
+        String[] parts = input.split("\\s+");
+        String command = parts[0];
+        switch (command) {
+            case "help":
+                System.out.println("Available commands: help, exit, echo <text>");
+                break;
+            case "echo":
+                if (parts.length > 1) {
+                    System.out.println(input.substring(5)); // 输出后续内容
+                }
+                else {
+                    System.out.println("Usage: echo <text>");
+                }
+                break;
+            case "apt":
+                if (parts.length > 1) {
+                    System.out.println(input.substring(4)); // 输出后续内容
+                }
+
+            default:
+                System.out.println("Unknown command: " + command);
+        }
     }
 }

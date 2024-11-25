@@ -17,7 +17,7 @@ public class readConfigFileInfo {
 
             // 使用 getter 方法访问各个字段
 
-            /*
+
             System.out.println("Game Directory: " + config.getDirs().getGameDir());
             System.out.println("Is Version Isolation Open: " + config.getDirs().getIsOpenVersionIsolation());
             System.out.println("Java Directory: " + config.getDirs().getJavaDir());
@@ -25,7 +25,7 @@ public class readConfigFileInfo {
             System.out.println("Java Memory Default: " + config.getJavaMemory().getDEFAULT());
             System.out.println("Java Memory Xmx: " + config.getJavaMemory().getXmx());
             System.out.println("Java Memory Xms: " + config.getJavaMemory().getXms());
-             */
+
         } catch (IOException e) {
             e.printStackTrace();
         }
